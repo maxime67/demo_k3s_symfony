@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# IDE
+.idea
+.vscode
+
+# Tests
+tests/
+phpunit.xml
+
+# Documentation
+README.md
+docs/
+
+# Node modules (si tu utilises Webpack Encore)
+node_modules/
+package.json
+package-lock.json
+webpack.config.js
+
+# Logs
+var/log/
+var/cache/
+
+# Vendor (sera installé dans le container)
+vendor/
