@@ -19,6 +19,7 @@ final class ArticleController extends AbstractController
     {
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
+            'csrf_protection' => false
         ]);
     }
 
@@ -26,7 +27,9 @@ final class ArticleController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article, [
+            'csrf_protection' => false
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,6 +42,7 @@ final class ArticleController extends AbstractController
         return $this->render('article/new.html.twig', [
             'article' => $article,
             'form' => $form,
+            'csrf_protection' => false
         ]);
     }
 
@@ -47,13 +51,16 @@ final class ArticleController extends AbstractController
     {
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            'csrf_protection' => false
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article, [
+            'csrf_protection' => false
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,17 +72,15 @@ final class ArticleController extends AbstractController
         return $this->render('article/edit.html.twig', [
             'article' => $article,
             'form' => $form,
+            'csrf_protection' => false
         ]);
     }
 
     #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();
-        }
-
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -29,7 +29,7 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 # Installer les dépendances Composer
-RUN composer install --no-scripts --no-interaction --prefer-dist --optimize-autoloader
+RUN composer install --no-scripts
 
 
 # Configurer les permissions
