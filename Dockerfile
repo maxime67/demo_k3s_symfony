@@ -28,8 +28,9 @@ WORKDIR /var/www/html
 # Copier les fichiers de l'application
 COPY . /var/www/html
 
+#RUN composer require symfony/security-csrf
 # Installer les dépendances Composer
-RUN composer install --no-scripts
+RUN composer install --no-scripts --no-interaction --prefer-dist --optimize-autoloader
 
 
 # Configurer les permissions

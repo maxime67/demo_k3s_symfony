@@ -76,11 +76,13 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_article_delete', methods: ['POST', 'DELETE'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
-            $entityManager->remove($article);
-            $entityManager->flush();
+        // Pas de vérification CSRF
+        $entityManager->remove($article);
+        $entityManager->flush();
+
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
     }
 }
